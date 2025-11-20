@@ -12,9 +12,18 @@ body {
   color: #ffffff;
 }
 .board {
-  border: solid 2px #ffffff;
+  display: flex;
+  flex-wrap: wrap;
+  border: solid 2px #000000;
+  background-color: #ffffff;
   height: 60vh;
   width: 60vh;
+}
+.cell{
+  border: solid 2px #000000;
+  box-sizing: border-box;
+  height: 20vh;
+  width: 20vh;
 }
 .animated-gradient {
   background: linear-gradient(60deg, #0f0756, #470303);
