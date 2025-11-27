@@ -19,11 +19,15 @@ body {
   height: 60vh;
   width: 60vh;
 }
-.cell{
+.cell {
   border: solid 2px #000000;
   box-sizing: border-box;
   height: 20vh;
   width: 20vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 4rem;
 }
 .animated-gradient {
   background: linear-gradient(60deg, #0f0756, #470303);
