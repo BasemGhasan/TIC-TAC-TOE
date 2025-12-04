@@ -1,6 +1,9 @@
 body {
   margin: 0;
 }
+h1, h2, h3, h4, h5, h6 {
+  color: #ffffff;
+}
 .root {
   display: flex;
   flex-direction: column;
@@ -8,22 +11,19 @@ body {
   align-items: center;
   height: 80vh;
 }
-.header {
-  color: #ffffff;
-}
 .board {
   display: flex;
   flex-wrap: wrap;
   border: solid 2px #000000;
   background-color: #ffffff;
-  height: 60vh;
-  width: 60vh;
+  width: min(90vw, 54vh);
+  height: min(90vw, 54vh);
 }
 .cell {
   border: solid 2px #000000;
   box-sizing: border-box;
-  height: 20vh;
-  width: 20vh;
+  width: min(30vw, 18vh);
+  height: min(30vw, 18vh);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -35,6 +35,17 @@ body {
   height: 100vh;
   width: 100%;
   animation: gradient-shift 10s linear infinite;
+}
+.play-turn {
+  margin-top: 0;
+}
+.error-message{
+  margin: 0;
+  margin-top: 15;
+  padding: 5;
+  border-radius: 10;
+  background-color: #ffffff;
+  color: red;
 }
 
 @keyframes gradient-shift {

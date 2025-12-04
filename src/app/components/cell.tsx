@@ -6,16 +6,26 @@ type CellProps = {
   setCells: Dispatch<SetStateAction<string[]>>;
   go: string;
   setGo: Dispatch<SetStateAction<string>>;
+  setTurn:  Dispatch<SetStateAction<string>>;
+  setError: Dispatch<SetStateAction<string>>;
 };
 
-export default function Cell({ id, cells, setCells, go, setGo }: CellProps) {
+export default function Cell({ id, cells, setCells, go, setGo, setTurn, setError }: CellProps) {
+
   const handleClick = () => {
     const taken = !!cells[id];
-    console.log(taken);
+    if (taken) {
+      setError("This block is already taken. Please click somewhere else.");
+      return;
+    }
+    
+    const nextGo = go === "X" ? "O" : "X";
     const newCells = [...cells];
     newCells[id] = go;
     setCells(newCells);
-    setGo(go === "X" ? "O" : "X");
+    setGo(nextGo);
+    setTurn(`It is ${nextGo} to play`);
+    setError("");
   };
 
   return (
