@@ -1,7 +1,12 @@
 body {
   margin: 0;
 }
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: #ffffff;
 }
 .root {
@@ -39,13 +44,48 @@ h1, h2, h3, h4, h5, h6 {
 .play-turn {
   margin-top: 0;
 }
-.error-message{
+.error-message {
   margin: 0;
   margin-top: 15;
   padding: 5;
   border-radius: 10;
   background-color: #ffffff;
   color: red;
+}
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+.refreshIcon {
+  color: #ffffff;
+  font-size: 20;
+  transition: transform 0.3s ease;
+}
+.container:hover {
+  opacity: 0.8;
+}
+.spin {
+  animation: spin 1s;
+}
+.X, .O{
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+}
+.X {
+  color: red;
+}
+.O {
+  color: blue;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 @keyframes gradient-shift {

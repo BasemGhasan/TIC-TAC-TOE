@@ -6,50 +6,75 @@ type CellProps = {
   setCells: Dispatch<SetStateAction<string[]>>;
   go: string;
   setGo: Dispatch<SetStateAction<string>>;
-  turn: string;
-  setTurn:  Dispatch<SetStateAction<string>>;
+  setTurn: Dispatch<SetStateAction<string>>;
   setError: Dispatch<SetStateAction<string>>;
+  end: boolean;
+  setEnd: Dispatch<SetStateAction<boolean>>;
 };
 
-export default function Cell({ id, cells, setCells, go, setGo, turn, setTurn, setError,}: CellProps) {
-
+export default function Cell({
+  id,
+  cells,
+  setCells,
+  go,
+  setGo,
+  setTurn,
+  setError,
+  end,
+  setEnd,
+}: CellProps) {
   const handleClick = () => {
-    const taken = !!cells[id];
-    if (turn.slice(0, 6) === "Player"){
-      return
+    if (!end) {
+      const taken = !!cells[id];
+      if (taken) {
+        setError("This block is already taken. Please click somewhere else.");
+        return;
+      }
+
+      const newCells = [...cells];
+      handleCellChange(newCells);
+      winningChecker(newCells);
     }
-    if (taken) {
-      setError("This block is already taken. Please click somewhere else.");
-      return;
-    }
-    
+  };
+
+  const handleCellChange = (newCells: string[]) => {
     const nextGo = go === "X" ? "O" : "X";
-    const newCells = [...cells];
     newCells[id] = go;
     setCells(newCells);
     setGo(nextGo);
     setTurn(`It is ${nextGo} to play`);
     setError("");
-    winningChecker(newCells);
   };
 
   const winningChecker = (newCells: string[]) => {
-    const winningCombinations = [[0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [0,4,8], [2,4,6]];
+    const winningCombos = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
 
-    for (let i = 0; i < winningCombinations.length; i++){
-      if (!!newCells[winningCombinations[i][0]] && newCells[winningCombinations[i][0]] === newCells[winningCombinations[i][1]] && newCells[winningCombinations[i][0]] === newCells[winningCombinations[i][2]]){
-        setTurn(`Player ${newCells[winningCombinations[i][0]]} Won!!`);
+    winningCombos.forEach((combo) => {
+      if (!!newCells[combo[0]] && newCells[combo[0]] === newCells[combo[1]] && newCells[combo[0]] === newCells[combo[2]]) {
+        setTurn(`Player ${newCells[combo[0]]} Won!!`);
+        setEnd(true);
         return;
       }
-    }
-    if(newCells.every(newCell => newCell !== "")){
+    })
+
+    if (newCells.every((newCell) => newCell !== "")) {
       setTurn(`It's a Draw!!`);
+      setEnd(true);
     }
-  }
+  };
 
   return (
     <div className="cell" onClick={handleClick}>
-      {cells[id]}
+      <div className={cells[id]}>{cells[id]}</div>
     </div>
   );
 }

@@ -1,12 +1,25 @@
 "use client";
 import { useState } from "react";
 import Cell from "./components/cell";
+import { IoIosRefresh } from "react-icons/io";
 
 export default function Home() {
   const [cells, setCells] = useState(["", "", "", "", "", "", "", "", ""]);
   const [go, setGo] = useState("X");
-  const [turn, setTurn]  = useState(`It is X to play`);
+  const [turn, setTurn] = useState(`It is X to play`);
   const [error, setError] = useState("");
+  const [end, setEnd] = useState(false);
+  const [isSpinning, setIsSpinning] = useState(false); 
+
+  const resetGame = () => {
+    setCells(["", "", "", "", "", "", "", "", ""]);
+    setGo("X");
+    setTurn("It is X to play");
+    setError("");
+    setEnd(false);
+    setIsSpinning(true); 
+    setTimeout(() => setIsSpinning(false), 1000);
+  };
 
   return (
     <div className="animated-gradient">
@@ -22,13 +35,18 @@ export default function Home() {
               setCells={setCells}
               go={go}
               setGo={setGo}
-              turn={turn}
               setTurn={setTurn}
               setError={setError}
+              end={end}
+              setEnd={setEnd}
             />
           ))}
         </div>
         {error && <h3 className="error-message">{error}</h3>}
+        <div className="container" onClick={resetGame}>
+          <h2>Clean the board</h2>
+          <IoIosRefresh className={`refreshIcon ${isSpinning ? 'spin' : ''}`} />
+        </div>
       </div>
     </div>
   );
