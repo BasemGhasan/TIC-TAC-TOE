@@ -3,30 +3,34 @@ import { useState } from "react";
 import Cell from "./components/cell";
 import { IoIosRefresh } from "react-icons/io";
 
+// Main game component
 export default function Home() {
-  const [cells, setCells] = useState(["", "", "", "", "", "", "", "", ""]);
-  const [go, setGo] = useState("X");
-  const [turn, setTurn] = useState(`It is X to play`);
-  const [error, setError] = useState("");
-  const [end, setEnd] = useState(false);
-  const [isSpinning, setIsSpinning] = useState(false); 
+  // Game state
+  const [cells, setCells] = useState(["", "", "", "", "", "", "", "", ""]); // Board cells
+  const [go, setGo] = useState("X"); // Current player
+  const [turn, setTurn] = useState(`It is X to play`); // Turn message
+  const [error, setError] = useState(""); // Error message
+  const [end, setEnd] = useState(false); // Game ended flag
+  const [isSpinning, setIsSpinning] = useState(false); // Icon spin state
 
+  // Reset game function
   const resetGame = () => {
     setCells(["", "", "", "", "", "", "", "", ""]);
     setGo("X");
     setTurn("It is X to play");
     setError("");
     setEnd(false);
-    setIsSpinning(true); 
-    setTimeout(() => setIsSpinning(false), 1000);
+    setIsSpinning(true); // Start spin
+    setTimeout(() => setIsSpinning(false), 1000); // Stop after 1s
   };
 
   return (
     <div className="animated-gradient">
       <div className="root">
         <h1 className="header"> Tic-Tac-Toe Game</h1>
-        <h2 className="play-turn"> {turn} </h2>
+        <h2 className="play-turn"> {turn} </h2> {/* Display turn or result */}
         <div className="board">
+          {/* Render 9 cells */}
           {cells.map((cell, index) => (
             <Cell
               id={index}
@@ -42,10 +46,13 @@ export default function Home() {
             />
           ))}
         </div>
-        {error && <h3 className="error-message">{error}</h3>}
+        {error && <h3 className="error-message">{error}</h3>}{" "}
+        {/* Show error if any */}
         <div className="container" onClick={resetGame}>
+          {" "}
+          {/* Reset button */}
           <h2>Clean the board</h2>
-          <IoIosRefresh className={`refreshIcon ${isSpinning ? 'spin' : ''}`} />
+          <IoIosRefresh className={`refreshIcon ${isSpinning ? "spin" : ""}`} />
         </div>
       </div>
     </div>

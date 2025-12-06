@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 
+// Props for Cell component
 type CellProps = {
   id: number;
   cells: string[];
@@ -23,6 +24,7 @@ export default function Cell({
   end,
   setEnd,
 }: CellProps) {
+  // Handle cell click
   const handleClick = () => {
     if (!end) {
       const taken = !!cells[id];
@@ -37,6 +39,7 @@ export default function Cell({
     }
   };
 
+  // Update cell and switch player
   const handleCellChange = (newCells: string[]) => {
     const nextGo = go === "X" ? "O" : "X";
     newCells[id] = go;
@@ -46,25 +49,30 @@ export default function Cell({
     setError("");
   };
 
+  // Check for win or draw
   const winningChecker = (newCells: string[]) => {
     const winningCombos = [
-      [0, 1, 2],
+      [0, 1, 2], // Rows
       [3, 4, 5],
       [6, 7, 8],
-      [0, 3, 6],
+      [0, 3, 6], // Columns
       [1, 4, 7],
       [2, 5, 8],
-      [0, 4, 8],
+      [0, 4, 8], // Diagonals
       [2, 4, 6],
     ];
 
     winningCombos.forEach((combo) => {
-      if (!!newCells[combo[0]] && newCells[combo[0]] === newCells[combo[1]] && newCells[combo[0]] === newCells[combo[2]]) {
+      if (
+        !!newCells[combo[0]] &&
+        newCells[combo[0]] === newCells[combo[1]] &&
+        newCells[combo[0]] === newCells[combo[2]]
+      ) {
         setTurn(`Player ${newCells[combo[0]]} Won!!`);
         setEnd(true);
         return;
       }
-    })
+    });
 
     if (newCells.every((newCell) => newCell !== "")) {
       setTurn(`It's a Draw!!`);
