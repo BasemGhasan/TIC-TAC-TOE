@@ -22,6 +22,7 @@ export default function Home() {
               setCells={setCells}
               go={go}
               setGo={setGo}
+              turn={turn}
               setTurn={setTurn}
               setError={setError}
             />
