@@ -49,8 +49,9 @@ export default function Cell({
     setError("");
   };
 
-  // Check for win or draw
+  // Check for win or draw after a move
   const winningChecker = (newCells: string[]) => {
+    // All possible winning combinations (rows, columns, diagonals)
     const winningCombos = [
       [0, 1, 2], // Rows
       [3, 4, 5],
@@ -62,7 +63,8 @@ export default function Cell({
       [2, 4, 6],
     ];
 
-    winningCombos.forEach((combo) => {
+    // Check if any combo has a winner; some() stops on first win
+    const winnerFound = winningCombos.some((combo) => {
       if (
         !!newCells[combo[0]] &&
         newCells[combo[0]] === newCells[combo[1]] &&
@@ -70,11 +72,13 @@ export default function Cell({
       ) {
         setTurn(`Player ${newCells[combo[0]]} Won!!`);
         setEnd(true);
-        return;
+        return true; // Found win, stop checking
       }
+      return false;
     });
 
-    if (newCells.every((newCell) => newCell !== "")) {
+    // If no winner and board is full, it's a draw
+    if (!winnerFound && newCells.every((newCell) => newCell !== "")) {
       setTurn(`It's a Draw!!`);
       setEnd(true);
     }
